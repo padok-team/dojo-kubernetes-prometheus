@@ -12,6 +12,7 @@ For this exercise, you will need :
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/)
 - [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 - [`helm`](https://helm.sh/docs/intro/install/)
+- [`jq`](https://stedolan.github.io/jq/download/)
 
 ## Step 2: Bootstrap the environment
 
