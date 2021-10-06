@@ -1,0 +1,8 @@
+env:
+  - name: REDIS_EXPORTER_CHECK_SINGLE_KEYS
+    value: padok
+
+redisAddress: redis://redis-master.default:6379
+
+serviceMonitor:
+  enabled: true

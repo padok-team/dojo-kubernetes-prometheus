@@ -1,0 +1,23 @@
+{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "consumer.fullname" . }}
+  labels:
+{{ include "consumer.labels" . | indent 4 }}
+spec: 
+  groups:
+  - name: {{ include "consumer.fullname" . }}
+    interval: 1s
+    rules:
+    # When redis_key_size{key="padok"} exists, redis_items_in_queue has the same
+    # value and labels. When redis_key_size is null, redis_items_in_queue has a
+    # value of 0 with the following labels:
+    # {service="prometheus-redis-exporter",namespace="{{ .Release.Namespace }}",key="padok"}
+    - record: redis_items_in_queue
+      {{- $queryLabels := printf "{service=\"prometheus-redis-exporter\",namespace=\"%s\",key=\"padok\"}" .Release.Namespace }}
+      expr: |
+        redis_key_size{{ $queryLabels }}
+        or
+        clamp_max(absent(redis_key_size{{ $queryLabels }}), 0)        
+{{ end -}}

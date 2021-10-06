@@ -1,0 +1,9 @@
+prometheus:
+  url: http://prometheus-kube-prometheus-prometheus
+
+rules:
+  # This block exposes all Prometheus timeseries starting with "redis_" as a
+  # custom metric in the Kubernetes API.
+  custom:
+    - seriesQuery: '{__name__=~"^redis_.*"}'
+      metricsQuery: <<.Series>>{<<.LabelMatchers>>}

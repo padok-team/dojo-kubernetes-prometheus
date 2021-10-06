@@ -1,0 +1,25 @@
+prometheus:
+  prometheusSpec:
+    # Scrape metrics every 5 seconds.
+    scrapeInterval: 5s
+
+    # Watch all PrometheusRules in the cluster.
+    ruleNamespaceSelector:
+      matchLabels: {}
+    ruleSelector:
+      matchLabels: {}
+
+    # Watch all ServiceMonitors in the cluster.
+    serviceMonitorNamespaceSelector:
+      matchLabels: {}
+    serviceMonitorSelector:
+      matchLabels: {}
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - prometheus.vcap.me
+    pathType: ImplementationSpecific
+    paths:
+      - /

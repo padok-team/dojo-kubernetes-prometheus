@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "producer.fullname" . }}
+  labels:
+{{ include "producer.labels" . | indent 4 }}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: producer.vcap.me
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "producer.fullname" . }}
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
